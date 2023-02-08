@@ -24,3 +24,12 @@ Once this is done, you can try the following invocations:
   `docker build  --secret=id=NPMRC --target=report-artifacts --output type=local,dest=test-reports` \
   Test reports are now available in `./test-reports/unit-tests.txt` regardless
   of whether tests passed or not.
+- **To use an existing image as a "remote" cache:** \
+  First of all, make sure you have set the environment variable
+  `DOCKER_BUILDKIT=1`. Then, build the image you want to use as a cache source: \
+  `docker build  . --secret=id=NPMRC --target=web-server --build-arg BUILDKIT_INLINE_CACHE=1 --tag example-node-app:1.0` \
+  Now, run `docker builder prune -a` to wipe the build cache completely, and
+  build a new image based on the previous build: \
+  `docker build  . --secret=id=NPMRC --target=web-server --build-arg BUILDKIT_INLINE_CACHE=1 --tag example-node-app:1.1 --cache-from=example-node-app:1.0` \
+  If you haven't changed any files, every build step should be cached, and the
+  build essentially becomes a no-op.
