@@ -21,7 +21,7 @@ Once this is done, you can try the following invocations:
   `docker run --rm -p8080:80 sha256:...` \
   _Et voilà_, you can now see the app in all its glory at http://localhost:8080
 - **To run the tests and extract the test reports:** \
-  `docker build  --secret=id=NPMRC --target=report-artifacts --output type=local,dest=test-reports` \
+  `docker build . --secret=id=NPMRC --target=report-artifacts --output type=local,dest=test-reports` \
   Test reports are now available in `./test-reports/unit-tests.txt` regardless
   of whether tests passed or not.
 - **To use an existing image as a "remote" cache:** \
